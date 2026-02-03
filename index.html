@@ -24,14 +24,34 @@ header{
   text-align:center;
   padding:45px 20px;
 }
-header h1{margin:0;font-size:40px}
+header h1{
+  margin:0;
+  font-size:40px;
+}
+header h1 img{
+  width:25px;
+  vertical-align:middle;
+}
 header p{color:#ccc}
+
+/* SEARCH */
+.search-bar{
+  margin:30px auto;
+  text-align:center;
+}
+.search-bar input, .search-bar select{
+  padding:10px;
+  font-size:16px;
+  margin:5px;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
 
 /* CONTAINER */
 .container{
   max-width:1200px;
   margin:auto;
-  padding:40px 20px;
+  padding:20px 20px 60px 20px;
 }
 
 /* CARS GRID */
@@ -47,7 +67,10 @@ header p{color:#ccc}
   border-radius:12px;
   overflow:hidden;
   box-shadow:0 8px 20px rgba(0,0,0,0.1);
+  cursor:pointer;
+  transition:transform 0.2s;
 }
+.car:hover{transform:scale(1.02);}
 .car img{
   width:100%;
   height:220px;
@@ -64,6 +87,65 @@ header p{color:#ccc}
 .car p{
   font-size:14px;
   line-height:1.6;
+  display:none;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  z-index:1001;
+  left:0;top:0;width:100%;height:100%;
+  overflow:auto;
+  background-color:rgba(0,0,0,0.6);
+}
+.modal-content{
+  background:#fff;
+  margin:50px auto;
+  padding:30px;
+  border-radius:12px;
+  width:90%;
+  max-width:800px;
+  position:relative;
+}
+.close{
+  position:absolute;
+  top:15px;
+  right:20px;
+  font-size:28px;
+  font-weight:bold;
+  cursor:pointer;
+  color:#333;
+}
+
+/* REVIEWS */
+.reviews{
+  margin-top:60px;
+}
+.reviews h2{
+  text-align:center;
+  margin-bottom:30px;
+}
+.review-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+}
+.review{
+  background:#fff;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.08);
+}
+.review p{
+  font-size:14px;
+  line-height:1.7;
+}
+.review span{
+  display:block;
+  margin-top:15px;
+  font-weight:bold;
+  color:#0a6cff;
 }
 
 /* MAP */
@@ -113,6 +195,7 @@ footer{
   color:#777;
   text-align:center;
   padding:20px;
+  font-size:14px;
 }
 </style>
 </head>
@@ -121,69 +204,65 @@ footer{
 
 <!-- HEADER -->
 <header>
-  <h1>Cars For Sale</h1>
+  <h1>Cars For Sale <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="Verified"></h1>
   <p>Affordable • Reliable • Professionally Selected Vehicles</p>
 </header>
 
+<!-- SEARCH -->
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Search cars by name">
+  <select id="typeFilter">
+    <option value="">All Types</option>
+    <option value="Sedan">Sedan</option>
+    <option value="SUV">SUV</option>
+    <option value="Compact">Compact</option>
+    <option value="Sport">Sport</option>
+    <option value="Family">Family</option>
+  </select>
+</div>
+
 <!-- CARS -->
 <div class="container">
-  <div class="cars">
-
-    <div class="car">
-      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70">
-      <div class="car-content">
-        <h3>Urban Cruiser</h3>
-        <div class="price">$3,800</div>
-        <p>
-        Designed for smooth performance and comfort.
-        Reliable engine with steady handling.
-        Clean interior and exterior finish.
-        Excellent road stability.
-        Ideal for daily and long drives.
-        Easy maintenance.
-        Strong resale value.
-        </p>
-      </div>
-    </div>
-
-    <div class="car">
-      <img src="https://images.unsplash.com/photo-1493238792000-8113da705763">
-      <div class="car-content">
-        <h3>Silver Runner</h3>
-        <div class="price">$2,500</div>
-        <p>
-        Smooth and efficient driving experience.
-        Fuel-friendly performance.
-        Comfortable seating.
-        Responsive steering.
-        Well-maintained condition.
-        Suitable for city use.
-        Dependable choice.
-        </p>
-      </div>
-    </div>
-
-    <div class="car">
-      <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a">
-      <div class="car-content">
-        <h3>Classic Roadster</h3>
-        <div class="price">$4,000</div>
-        <p>
-        Solid build quality.
-        Stable highway performance.
-        Clean interior finish.
-        Comfortable cabin.
-        Reliable braking system.
-        Smooth acceleration.
-        Professional appearance.
-        </p>
-      </div>
-    </div>
-
+  <div class="cars" id="carContainer">
+    <!-- Cars injected via JavaScript -->
   </div>
+
+  <!-- REVIEWS -->
+  <section class="reviews">
+    <h2>Customer Reviews</h2>
+    <div class="review-grid">
+      <div class="review">
+        <p>“The entire process was smooth and professional. The car was exactly as described, clean, and well maintained. Communication was clear and honest from start to finish. I would definitely recommend this dealership.”</p>
+        <span>— Michael T.</span>
+      </div>
+      <div class="review">
+        <p>“Very impressed with the quality of vehicles listed. Prices were fair and reasonable. I appreciated the transparency and fast email response. Overall, a reliable place to buy a car.”</p>
+        <span>— Sarah L.</span>
+      </div>
+      <div class="review">
+        <p>“I was skeptical at first, but everything turned out great. The car drives perfectly and matches the description. Professional service and no pressure at all.”</p>
+        <span>— Daniel K.</span>
+      </div>
+      <div class="review">
+        <p>“Excellent experience from inquiry to purchase. Honest descriptions, realistic pricing, and respectful communication. I will definitely return for my next vehicle.”</p>
+        <span>— Amanda R.</span>
+      </div>
+    </div>
+  </section>
 
   <!-- MAP -->
   <div id="map"></div>
+</div>
+
+<!-- MODAL -->
+<div id="carModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="modalClose">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <div id="modalPrice" style="color:#0a6cff; font-weight:bold; font-size:22px; margin:10px 0;"></div>
+    <img id="modalImage" src="" style="width:100%; height:250px; object-fit:cover; border-radius:12px; margin-bottom:15px;">
+    <p id="modalDesc" style="font-size:15px; line-height:1.7;"></p>
+  </div>
 </div>
 
 <!-- CONTACT -->
@@ -195,7 +274,7 @@ footer{
 
 <!-- FLOATING EMAIL BUTTON -->
 <a class="email-btn" href="mailto:willowmadina@gmail.com">
-  <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
+  <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email">
 </a>
 
 <!-- FOOTER -->
@@ -203,18 +282,90 @@ footer{
   © 2026 Cars For Sale. All Rights Reserved.
 </footer>
 
-<!-- MAP SCRIPT -->
+<!-- SCRIPTS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
+/* MAP */
 var map = L.map('map').setView([40.7128,-74.0060],5);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
   attribution:'© OpenStreetMap'
 }).addTo(map);
+L.marker([40.7128,-74.0060]).addTo(map).bindPopup("Sample Vehicle Location").openPopup();
 
-L.marker([40.7128,-74.0060]).addTo(map)
-.bindPopup("Vehicle Location")
-.openPopup();
+/* CAR DATA */
+const cars = [
+  {
+    name:"Urban Cruiser", price:"$3,800", type:"SUV",
+    img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70",
+    desc:"Designed for smooth performance and comfort. Reliable engine with steady handling. Clean interior and exterior finish. Excellent road stability. Ideal for daily and long drives. Easy maintenance. Strong resale value."
+  },
+  {
+    name:"Silver Runner", price:"$2,500", type:"Sedan",
+    img:"https://images.unsplash.com/photo-1493238792000-8113da705763",
+    desc:"Smooth and efficient driving experience. Fuel-friendly performance. Comfortable seating. Responsive steering. Well-maintained condition. Suitable for city use. Dependable choice."
+  },
+  {
+    name:"Classic Roadster", price:"$4,000", type:"Sport",
+    img:"https://images.unsplash.com/photo-1502877338535-766e1452684a",
+    desc:"Solid build quality. Stable highway performance. Clean interior finish. Comfortable cabin. Reliable braking system. Smooth acceleration. Professional appearance."
+  },
+  // Add more cars similarly (total 10-15)
+  {
+    name:"Family Voyager", price:"$3,200", type:"Family",
+    img:"https://images.unsplash.com/photo-1608889175512-6bcbde8fa7d4",
+    desc:"Spacious interior and comfortable seating. Excellent safety ratings. Smooth handling. Fuel-efficient performance. Reliable for long trips. Easy maintenance. High resale value."
+  },
+  {
+    name:"Compact Zoom", price:"$1,200", type:"Compact",
+    img:"https://images.unsplash.com/photo-1590891743867-8f1b9b4edbb6",
+    desc:"Small and efficient city car. Easy parking. Economical fuel consumption. Responsive steering. Comfortable cabin. Durable design. Perfect for urban commuting."
+  }
+];
+
+/* RENDER CARS */
+function renderCars(){
+  const container = document.getElementById('carContainer');
+  container.innerHTML="";
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const type = document.getElementById('typeFilter').value;
+  cars.forEach((car,i)=>{
+    if((car.name.toLowerCase().includes(search)) && (type=="" || type==car.type)){
+      const div=document.createElement('div');
+      div.className="car";
+      div.dataset.index=i;
+      div.innerHTML=`<img src="${car.img}">
+        <div class="car-content">
+        <h3>${car.name}</h3>
+        <div class="price">${car.price}</div>
+        </div>`;
+      div.onclick=()=>openModal(i);
+      container.appendChild(div);
+    }
+  });
+}
+
+/* MODAL */
+const modal=document.getElementById('carModal');
+const modalTitle=document.getElementById('modalTitle');
+const modalPrice=document.getElementById('modalPrice');
+const modalImage=document.getElementById('modalImage');
+const modalDesc=document.getElementById('modalDesc');
+function openModal(index){
+  modalTitle.innerText=cars[index].name;
+  modalPrice.innerText=cars[index].price;
+  modalImage.src=cars[index].img;
+  modalDesc.innerText=cars[index].desc;
+  modal.style.display="block";
+}
+document.getElementById('modalClose').onclick=function(){modal.style.display="none";}
+window.onclick=function(e){if(e.target==modal){modal.style.display="none";}}
+
+/* SEARCH EVENTS */
+document.getElementById('searchInput').addEventListener('input',renderCars);
+document.getElementById('typeFilter').addEventListener('change',renderCars);
+
+/* INITIAL RENDER */
+renderCars();
 </script>
-
 </body>
 </html>
