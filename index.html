@@ -2,294 +2,219 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Cars For Sale</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cars For Sale</title>
+
+<!-- LEAFLET MAP -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:#f4f6f8;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f3f5f8;
   color:#333;
 }
-header{
-  background:#111;
-  color:#fff;
-  padding:30px 20px;
-  text-align:center;
-}
-header h1{
-  margin:0;
-  font-size:36px;
-}
-header p{
-  margin-top:10px;
-  color:#ccc;
-}
 
-section{
-  padding:40px 20px;
+/* HEADER */
+header{
+  background:#0d0d0d;
+  color:#fff;
+  text-align:center;
+  padding:45px 20px;
+}
+header h1{margin:0;font-size:40px}
+header p{color:#ccc}
+
+/* CONTAINER */
+.container{
   max-width:1200px;
   margin:auto;
+  padding:40px 20px;
 }
 
+/* CARS GRID */
 .cars{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   gap:25px;
 }
 
+/* CAR CARD */
 .car{
   background:#fff;
-  border-radius:10px;
+  border-radius:12px;
   overflow:hidden;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  box-shadow:0 8px 20px rgba(0,0,0,0.1);
 }
 .car img{
   width:100%;
   height:220px;
   object-fit:cover;
 }
-.car-content{
-  padding:20px;
-}
-.car h3{
-  margin:0;
-}
+.car-content{padding:20px}
+.car h3{margin:0;font-size:20px}
 .price{
+  color:#0a6cff;
   font-size:22px;
-  color:#0a7cff;
   font-weight:bold;
-  margin:10px 0;
+  margin:8px 0;
 }
 .car p{
   font-size:14px;
   line-height:1.6;
 }
 
+/* MAP */
+#map{
+  width:100%;
+  height:400px;
+  border-radius:12px;
+  margin-top:40px;
+}
+
+/* CONTACT SECTION */
 .contact{
   background:#111;
   color:#fff;
   text-align:center;
-  padding:40px 20px;
+  padding:50px 20px;
 }
 .contact a{
-  color:#0a7cff;
-  font-size:18px;
+  color:#0a6cff;
   text-decoration:none;
+  font-size:18px;
 }
 
+/* FLOATING EMAIL BUTTON */
+.email-btn{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#0a6cff;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 15px rgba(0,0,0,0.3);
+  z-index:1000;
+}
+.email-btn img{
+  width:32px;
+  height:32px;
+}
+
+/* FOOTER */
 footer{
-  text-align:center;
-  padding:20px;
   background:#000;
   color:#777;
+  text-align:center;
+  padding:20px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <header>
   <h1>Cars For Sale</h1>
-  <p>Reliable • Affordable • Ready to Drive</p>
+  <p>Affordable • Reliable • Professionally Selected Vehicles</p>
 </header>
 
-<section>
+<!-- CARS -->
+<div class="container">
   <div class="cars">
 
-    <!-- CAR 1 -->
     <div class="car">
-      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70" alt="Car">
+      <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70">
       <div class="car-content">
         <h3>Urban Cruiser</h3>
         <div class="price">$3,800</div>
         <p>
-        This vehicle is well-maintained and designed for smooth daily driving.
-        The engine runs quietly and delivers consistent performance.
-        Interior is clean, comfortable, and spacious for family use.
-        Steering is responsive, making city driving easy.
-        Suspension handles rough roads well.
-        Fuel consumption is economical.
-        Ideal for long-term reliability and comfort.
+        Designed for smooth performance and comfort.
+        Reliable engine with steady handling.
+        Clean interior and exterior finish.
+        Excellent road stability.
+        Ideal for daily and long drives.
+        Easy maintenance.
+        Strong resale value.
         </p>
       </div>
     </div>
 
-    <!-- CAR 2 -->
     <div class="car">
-      <img src="https://images.unsplash.com/photo-1493238792000-8113da705763" alt="Car">
+      <img src="https://images.unsplash.com/photo-1493238792000-8113da705763">
       <div class="car-content">
         <h3>Silver Runner</h3>
         <div class="price">$2,500</div>
         <p>
-        A dependable car suitable for daily commuting.
-        Smooth braking and stable handling at highway speeds.
-        Interior features practical seating and good legroom.
-        Engine is fuel efficient and easy to maintain.
-        Clean dashboard and working electronics.
-        Ideal for first-time buyers.
-        Low maintenance cost overall.
+        Smooth and efficient driving experience.
+        Fuel-friendly performance.
+        Comfortable seating.
+        Responsive steering.
+        Well-maintained condition.
+        Suitable for city use.
+        Dependable choice.
         </p>
       </div>
     </div>
 
-    <!-- CAR 3 -->
     <div class="car">
-      <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a" alt="Car">
+      <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a">
       <div class="car-content">
         <h3>Classic Roadster</h3>
         <div class="price">$4,000</div>
         <p>
-        Stylish exterior with a strong road presence.
-        Engine responds quickly and smoothly.
-        Comfortable interior designed for long drives.
-        Suspension offers stable cornering.
-        Well-balanced for city and highway use.
-        Clean history and well cared for.
-        A solid option for car enthusiasts.
-        </p>
-      </div>
-    </div>
-
-    <!-- CAR 4 -->
-    <div class="car">
-      <img src="https://images.unsplash.com/photo-1549924231-f129b911e442" alt="Car">
-      <div class="car-content">
-        <h3>Compact Glide</h3>
-        <div class="price">$1,200</div>
-        <p>
-        Compact size makes parking and maneuvering effortless.
-        Fuel-efficient engine ideal for city driving.
-        Interior remains practical and comfortable.
-        Good visibility and easy steering.
-        Perfect for students or daily errands.
-        Affordable ownership costs.
-        Reliable performance for its class.
-        </p>
-      </div>
-    </div>
-
-    <!-- CAR 5 -->
-    <div class="car">
-      <img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c" alt="Car">
-      <div class="car-content">
-        <h3>Executive Sedan</h3>
-        <div class="price">$3,200</div>
-        <p>
-        Elegant design with professional appeal.
-        Smooth engine performance and quiet cabin.
-        Comfortable seating with ample legroom.
-        Advanced handling for stable driving.
-        Interior materials are well preserved.
-        Suitable for business or family use.
-        Reliable and stylish choice.
-        </p>
-      </div>
-    </div>
-
-    <!-- CAR 6 -->
-    <div class="car">
-      <img src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d" alt="Car">
-      <div class="car-content">
-        <h3>Highway Star</h3>
-        <div class="price">$2,900</div>
-        <p>
-        Built for long-distance comfort.
-        Engine performs well at highway speeds.
-        Smooth suspension reduces road fatigue.
-        Clean interior with comfortable seating.
-        Easy maintenance and good reliability.
-        Suitable for frequent travelers.
-        Balanced performance and economy.
-        </p>
-      </div>
-    </div>
-
-    <!-- CAR 7 -->
-    <div class="car">
-      <img src="https://images.unsplash.com/photo-1517940310602-26535839fe84" alt="Car">
-      <div class="car-content">
-        <h3>City Mate</h3>
-        <div class="price">$900</div>
-        <p>
-        Affordable option for daily city use.
-        Simple and efficient design.
-        Easy handling and low fuel consumption.
-        Comfortable enough for short trips.
-        Interior remains neat and usable.
-        Low running and service costs.
-        Great budget-friendly choice.
-        </p>
-      </div>
-    </div>
-
-    <!-- CAR 8 -->
-    <div class="car">
-      <img src="https://images.unsplash.com/photo-1511390161797-7c0edc7f7a2a" alt="Car">
-      <div class="car-content">
-        <h3>Family Wagon</h3>
-        <div class="price">$3,500</div>
-        <p>
-        Spacious interior suitable for families.
-        Smooth ride and stable handling.
-        Reliable engine with consistent power.
-        Comfortable seating for long journeys.
-        Practical storage space.
-        Well-maintained and clean.
-        Designed for everyday family needs.
-        </p>
-      </div>
-    </div>
-
-    <!-- CAR 9 -->
-    <div class="car">
-      <img src="https://images.unsplash.com/photo-1504215680853-026ed2a45def" alt="Car">
-      <div class="car-content">
-        <h3>Road Compact</h3>
-        <div class="price">$1,600</div>
-        <p>
-        Compact yet comfortable design.
-        Efficient fuel usage.
-        Smooth steering and braking.
-        Clean and simple interior layout.
-        Ideal for city and short highway trips.
-        Affordable ownership experience.
-        Dependable daily driver.
-        </p>
-      </div>
-    </div>
-
-    <!-- CAR 10 -->
-    <div class="car">
-      <img src="https://images.unsplash.com/photo-1494905998402-395d579af36f" alt="Car">
-      <div class="car-content">
-        <h3>Reliable Cruiser</h3>
-        <div class="price">$2,200</div>
-        <p>
-        Balanced performance and comfort.
-        Engine runs smoothly with good response.
-        Comfortable interior with good seating support.
-        Stable handling and braking.
-        Ideal for everyday use.
-        Low maintenance requirements.
-        A dependable choice for buyers.
+        Solid build quality.
+        Stable highway performance.
+        Clean interior finish.
+        Comfortable cabin.
+        Reliable braking system.
+        Smooth acceleration.
+        Professional appearance.
         </p>
       </div>
     </div>
 
   </div>
-</section>
 
-<section class="contact">
+  <!-- MAP -->
+  <div id="map"></div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact">
   <h2>Contact Us</h2>
-  <p>For inquiries, availability, or more details:</p>
-  <p><a href="mailto:willowmadina@gmail.com">willowmadina@gmail.com</a></p>
-</section>
+  <p>Email for inquiries & availability</p>
+  <a href="mailto:willowmadina@gmail.com">willowmadina@gmail.com</a>
+</div>
 
+<!-- FLOATING EMAIL BUTTON -->
+<a class="email-btn" href="mailto:willowmadina@gmail.com">
+  <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
+</a>
+
+<!-- FOOTER -->
 <footer>
   © 2026 Cars For Sale. All Rights Reserved.
 </footer>
+
+<!-- MAP SCRIPT -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+var map = L.map('map').setView([40.7128,-74.0060],5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  attribution:'© OpenStreetMap'
+}).addTo(map);
+
+L.marker([40.7128,-74.0060]).addTo(map)
+.bindPopup("Vehicle Location")
+.openPopup();
+</script>
 
 </body>
 </html>
