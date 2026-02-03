@@ -1,2 +1,1 @@
-# elite-doberman
-Elite Doberman Kennel | Professional Doberman puppies for sale worldwide. Healthy, vaccinated, and well-trained puppies delivered safely to USA, Europe, France, Germany, and beyond.
+Cars For Sale is a simple, responsive car listing website designed to showcase affordable vehicles with clear pricing and detailed descriptions. The site is lightweight, easy to deploy on GitHub Pages, and requires no backend or database.
