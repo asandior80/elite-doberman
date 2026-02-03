@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cars For Sale</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{margin:0;font-family:Arial;background:#f4f6f8}
+header{background:#111;color:#fff;padding:25px;text-align:center}
+nav{background:#000;padding:10px;text-align:center}
+nav a{color:#fff;margin:0 15px;text-decoration:none;font-weight:bold}
+section{padding:30px}
+h2{text-align:center}
+
+.filters{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+input,select,button{
+  padding:10px;
+  border-radius:6px;
+  border:1px solid #ccc;
+}
+button{cursor:pointer;background:#111;color:#fff}
+button:hover{background:#0a8}
+
+.cars{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+}
+.car{
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,.1);
+  overflow:hidden;
+}
+.car img{width:100%;height:200px;object-fit:cover}
+.car-content{padding:15px}
+.price{color:#0a8;font-size:20px;font-weight:bold}
+
+form{
+  max-width:500px;
+  margin:auto;
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+form input,textarea{width:100%;margin-bottom:10px}
+
+footer{background:#111;color:#fff;text-align:center;padding:15px}
+
+/* Floating buttons */
+.floating{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.floating a,.floating button{
+  width:55px;height:55px;border-radius:50%;
+  background:#111;color:#fff;
+  font-size:22px;border:none;
+  display:flex;align-items:center;justify-content:center;
+}
+.floating a:hover,.floating button:hover{background:#0a8}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🚗 Cars For Sale</h1>
+  <p>Affordable • Reliable • Ready</p>
+</header>
+
+<nav>
+  <a href="#home">Home</a>
+  <a href="#cars">Cars</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section id="home">
+  <h2>Welcome</h2>
+  <p style="text-align:center;max-width:700px;margin:auto">
+    We provide affordable vehicles for everyday use. Browse our listings,
+    compare prices, and request your preferred car easily.
+  </p>
+</section>
+
+<section id="cars">
+<h2>Available Cars</h2>
+
+<div class="filters">
+  <input type="text" id="search" placeholder="Search car">
+  <select id="category">
+    <option value="">All Types</option>
+    <option>Sedan</option>
+    <option>SUV</option>
+    <option>Compact</option>
+    <option>Luxury</option>
+    <option>Sport</option>
+  </select>
+  <input type="number" id="minPrice" placeholder="Min $">
+  <input type="number" id="maxPrice" placeholder="Max $">
+  <button onclick="filterCars()">Filter</button>
+</div>
+
+<div class="cars" id="carList"></div>
+</section>
+
+<section id="contact">
+<h2>Request a Car</h2>
+<form onsubmit="sendRequest(event)">
+  <input type="text" id="clientName" placeholder="Your Name" required>
+  <input type="email" id="clientEmail" placeholder="Your Email" required>
+  <input type="text" id="carInterest" placeholder="Car Name" required>
+  <textarea placeholder="Message"></textarea>
+  <button type="submit">Send Request</button>
+</form>
+</section>
+
+<footer>
+  <p>Email: <b>willowmadina@gmail.com</b></p>
+</footer>
+
+<div class="floating">
+  <a href="mailto:willowmadina@gmail.com">✉️</a>
+  <button onclick="scrollToTop()">👍</button>
+</div>
+
+<script>
+const cars=[
+{img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70",name:"Compact City Car",type:"Compact",price:500},
+{img:"https://images.unsplash.com/photo-1511910849309-0dffb8785146",name:"Reliable Sedan",type:"Sedan",price:1200},
+{img:"https://images.unsplash.com/photo-1549924231-f129b911e442",name:"Family Hatchback",type:"Compact",price:900},
+{img:"https://images.unsplash.com/photo-1502877338535-766e1452684a",name:"Sporty Coupe",type:"Sport",price:3000},
+{img:"https://images.unsplash.com/photo-1542362567-b07e54358753",name:"Luxury Sedan",type:"Luxury",price:4000},
+{img:"https://images.unsplash.com/photo-1519641471654-76ce0107ad1b",name:"Compact SUV",type:"SUV",price:2500},
+{img:"https://images.unsplash.com/photo-1525609004556-c46c7d6cf023",name:"Economy Ride",type:"Compact",price:700},
+{img:"https://images.unsplash.com/photo-1493238792000-8113da705763",name:"Executive Car",type:"Luxury",price:3500},
+{img:"https://images.unsplash.com/photo-1504215680853-026ed2a45def",name:"Urban Drive",type:"Sedan",price:800},
+{img:"https://images.unsplash.com/photo-1503736334956-4c8f8e92946d",name:"Touring Sedan",type:"Sedan",price:2200}
+];
+
+function displayCars(list){
+  const box=document.getElementById("carList");
+  box.innerHTML="";
+  list.forEach(c=>{
+    box.innerHTML+=`
+      <div class="car">
+        <img src="${c.img}">
+        <div class="car-content">
+          <h3>${c.name}</h3>
+          <p class="price">$${c.price}</p>
+          <p>Type: ${c.type}</p>
+        </div>
+      </div>`;
+  });
+}
+
+function filterCars(){
+  let s=document.getElementById("search").value.toLowerCase();
+  let cat=document.getElementById("category").value;
+  let min=document.getElementById("minPrice").value||0;
+  let max=document.getElementById("maxPrice").value||99999;
+
+  displayCars(cars.filter(c=>
+    c.name.toLowerCase().includes(s) &&
+    (cat==""||c.type==cat) &&
+    c.price>=min && c.price<=max
+  ));
+}
+
+function sendRequest(e){
+  e.preventDefault();
+  alert("Your request has been sent. We will contact you by email.");
+}
+
+function scrollToTop(){
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+window.onload=()=>displayCars(cars.sort(()=>0.5-Math.random()));
+</script>
+
+</body>
+</html>
